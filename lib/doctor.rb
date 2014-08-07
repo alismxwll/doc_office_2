@@ -26,6 +26,6 @@ class Doctor
   end
 
   def ==(doctor_obj)
-    @name == doctor_obj.name && @id == doctor_obj.id
+    @name == doctor_obj.name
   end
 end
