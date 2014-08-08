@@ -3,7 +3,16 @@ class Specialty
 
   def initialize(attributes)
     @title = attributes['title']
-    @id = attributes['id']
+    @id = attributes['id'].to_i
+  end
+
+  def doctors_with_specialty
+    doctors = []
+    result = DB.exec("SELECT * FROM doctors WHERE specialty_id = '#{@id}';")
+    result.each do |doc|
+      doctors << Doctor.new(doc)
+    end
+    doctors
   end
 
   def self.all
@@ -11,7 +20,7 @@ class Specialty
     result = DB.exec("SELECT * FROM specialty;")
     result.each do |spec|
       title = spec['title']
-      id = spec['id']
+      id = spec['id'].to_i
       specialties << Specialty.new({'title' => title, 'id' => id})
     end
     specialties
@@ -19,7 +28,7 @@ class Specialty
 
   def save
     result = DB.exec("INSERT INTO specialty (title) VALUES ('#{@title}') RETURNING id;")
-    @id = result.first['id']
+    @id = result.first['id'].to_i
   end
 
   def ==(other_title)

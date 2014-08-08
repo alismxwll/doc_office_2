@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Specialty do
   it 'initalizes a specialty object with a title and id' do
     title1 = Specialty.new({'title' => 'Pediatrician'})
@@ -29,11 +31,25 @@ describe Specialty do
     expect(Specialty.all).to eq [title1, title2]
   end
 
-  it 'will be the same specialty if they have the same name and id' do
+  it 'will be the same specialty if they have the same name' do
     title1 = Specialty.new({'title' => 'Pediatrician'})
     title2 = Specialty.new({'title' => 'Pediatrician'})
     title1.save
     title2.save
     expect(title1).to eq title2
+  end
+
+  describe 'doctors_with_specialty' do
+    it 'will list all of the doctors with a specific specialty' do
+      specialty = Specialty.new({'title' => 'Pediatrician', 'id' => 1})
+      specialty.save
+      doctor1 = Doctor.new({'name' => 'Dr. Ronaldo', 'specialty_id' => specialty.id})
+      doctor1.save
+      doctor2 = Doctor.new({'name' => 'Dr. Evil', 'specialty_id' => specialty.id})
+      doctor2.save
+      doctor3 = Doctor.new({'name' => 'Dr. Giggle', 'specialty_id' => 2})
+      doctor3.save
+      expect(specialty.doctors_with_specialty).to eq [doctor1, doctor2]
+    end
   end
 end

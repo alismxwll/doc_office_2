@@ -4,7 +4,7 @@ class Patient
   def initialize(attributes)
     @name = attributes['name']
     @birthday = attributes['birthday']
-    @id = attributes['id']
+    @id = attributes['id'].to_i
   end
 
   def self.all
@@ -13,7 +13,7 @@ class Patient
     result.each do |patient|
       name = patient['name']
       birthday = patient['birthday']
-      id = patient['id']
+      id = patient['id'].to_i
       patients << Patient.new({'name' => name, 'birthday' => birthday,
                               'id' => id})
     end
@@ -27,7 +27,7 @@ class Patient
   def save
     result = DB.exec("INSERT INTO patients (name, birthday) VALUES
                     ('#{@name}', '#{@birthday}') RETURNING id;")
-    @id = result.first['id']
+    @id = result.first['id'].to_i
   end
 
   def assign_doctor(doctor)
@@ -38,7 +38,7 @@ class Patient
     doctors = []
     result = DB.exec("SELECT doctor_id FROM doctor_patient WHERE patient_id = '#{@id}';")
     result.each do |result|
-      doctor_id = result['doctor_id']
+      doctor_id = result['doctor_id'].to_i
       doctor_name = DB.exec("SELECT * FROM doctors WHERE id = #{doctor_id};").first['name']
       doctors << Doctor.new({'name' => doctor_name, 'id' => doctor_id})
     end

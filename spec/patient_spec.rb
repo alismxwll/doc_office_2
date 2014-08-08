@@ -31,7 +31,7 @@ describe Patient do
   it 'will assign a patient to a doctor' do
     patient = Patient.new({'name' => 'Bill Clinton', 'birthday' => '05151948'})
     patient.save
-    doctor = Doctor.new({'name' => 'Dr. Ronaldo', 'specialty' => 'Brain Surgeon'})
+    doctor = Doctor.new({'name' => 'Dr. Ronaldo', 'specialty_id' => 1})
     doctor.save
     patient.assign_doctor(doctor)
     expect(patient.doctors).to eq [doctor]
