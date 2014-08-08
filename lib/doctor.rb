@@ -52,4 +52,15 @@ class Doctor
   def delete_doctor!
     DB.exec("DELETE FROM doctors WHERE id = #{@id};")
   end
+
+  def count_patients
+    doctors =  []
+    docs = DB.exec("SELECT * FROM doctors")
+    docs.each do |doc|
+      id = doc['id']
+      number_patients = DB.exec("SELECT COUNT (*) FROM doctor_patient WHERE doctor_id = #{id};")
+      doctors << number_patients.first['count'].to_i
+    end
+    doctors
+  end
 end

@@ -72,14 +72,19 @@ end
     end
   end
 
+  describe 'count_patients' do
+    it 'will count the number of patients a doctor has' do
+      doctor = Doctor.new({'name' => 'Dr. Ronaldo', 'specialty_id' => 1})
+      doctor.save
+      patient1 = Patient.new({'name' => 'Andrew Akers', 'birthday' => '04181988'})
+      patient1.save
+      patient1.assign_doctor(doctor)
+      patient2 = Patient.new({'name' => 'Meghan Lindsley', 'birthday' => '11011982'})
+      patient2.save
+      patient1.assign_doctor(doctor)
+      patient3 = Patient.new({'name' => 'Mr. Rogers', 'birthday' => '07171939'})
+      patient3.save
+      expect(doctor.count_patients).to eq [2]
+    end
+  end
 
-#   describe 'update_patient' do
-#   it 'will update a patients record' do
-#     patient = Patient.new({'name' => 'Bill Clinton', 'birthday' => '05151948'})
-#     patient.save
-#     patient2 = Patient.new({'name' => 'William Clinton', 'birthday' => '05161948'})
-#     patient.update_patient(patient2)
-#     expect(patient.name).to eq 'William Clinton'
-#     expect(patient.birthday).to eq '05161948'
-#   end
-# end
