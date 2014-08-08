@@ -3,6 +3,7 @@ require 'doctor'
 require 'patient'
 require 'specialty'
 require 'insurance'
+require 'appointment'
 require 'pg'
 require 'pry'
 
