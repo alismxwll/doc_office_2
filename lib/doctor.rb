@@ -1,15 +1,21 @@
 class Doctor
-  attr_accessor :name, :specialty_id, :id
+  attr_accessor :name, :specialty_id, :id, :insurance_company_id
 
   def initialize(attributes)
     @name = attributes['name']
     @specialty_id = attributes['specialty_id']
     @id = attributes['id'].to_i
+    @insurance_company_id = attributes['insurance_company_id']
   end
 
   def add_specialty(specialty)
     DB.exec("UPDATE doctors SET specialty_id = #{specialty.id} WHERE id = #{@id};")
     @specialty_id = specialty.id
+  end
+
+  def add_insurance(insurance)
+    DB.exec("UPDATE doctors SET insurance_company_id = #{insurance.id} WHERE id = #{@id};")
+    @insurance_company_id = insurance.id
   end
 
   def self.all
@@ -32,5 +38,18 @@ class Doctor
 
   def ==(doctor_obj)
     @name == doctor_obj.name && @id == doctor_obj.id
+  end
+
+  def update_doctor(doctor)
+    DB.exec("UPDATE doctors SET name = '#{doctor.name}' WHERE id = #{@id}")
+    DB.exec("UPDATE doctors SET specialty_id = '#{doctor.specialty_id}' WHERE id = #{@id};")
+    DB.exec("UPDATE doctors SET insurance_company_id = '#{doctor.insurance_company_id}' WHERE id = #{@id}")
+    @insurance_company_id = doctor.insurance_company_id
+    @name = doctor.name
+    @specialty_id = doctor.specialty_id
+  end
+
+  def delete_doctor!
+    DB.exec("DELETE FROM doctors WHERE id = #{@id};")
   end
 end

@@ -44,4 +44,15 @@ class Patient
     end
     doctors
   end
+
+  def update_patient(new_info)
+    DB.exec("UPDATE patients SET name = '#{new_info.name}' WHERE id = #{@id};")
+    DB.exec("UPDATE patients SET birthday = '#{new_info.birthday}' WHERE id = #{@id};")
+    @name = new_info.name
+    @birthday = new_info.birthday
+  end
+
+  def delete_patient!
+    DB.exec("DELETE FROM patients WHERE id = #{@id}")
+  end
 end

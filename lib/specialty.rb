@@ -35,4 +35,12 @@ class Specialty
     @title == other_title.title
   end
 
+  def update_specialty(specialty)
+    DB.exec("UPDATE specialty SET title = '#{specialty.title}' WHERE id = #{@id};")
+    @title = specialty.title
+  end
+
+  def delete_specialty!
+    DB.exec("DELETE FROM specialty WHERE id = #{@id};")
+  end
 end

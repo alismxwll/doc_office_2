@@ -20,7 +20,16 @@ class Insurance_Companies
     @id = result.first['id'].to_i
   end
 
-  def ==(other_comany)
-    @name == other_comany.name
+  def ==(other_company)
+    @name == other_company.name
+  end
+
+  def update_insurance_company(insurance)
+    DB.exec("UPDATE insurance_companies SET name = '#{insurance.name}' WHERE id = #{@id}")
+    @name = insurance.name
+  end
+
+  def delete_insurance!
+    DB.exec("DELETE FROM insurance_companies WHERE id = #{@id};")
   end
 end

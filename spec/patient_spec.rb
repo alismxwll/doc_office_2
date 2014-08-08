@@ -38,3 +38,27 @@ describe Patient do
   end
 end
 
+describe 'update_patient' do
+  it 'will update a patients record' do
+    patient = Patient.new({'name' => 'Bill Clinton', 'birthday' => '05151948'})
+    patient.save
+    patient2 = Patient.new({'name' => 'William Clinton', 'birthday' => '05161948'})
+    patient.update_patient(patient2)
+    expect(patient.name).to eq 'William Clinton'
+    expect(patient.birthday).to eq '05161948'
+  end
+end
+
+describe 'delete_patient!' do
+  it 'will delete a patient and all of the relevant info' do
+    patient = Patient.new({'name' => 'William Clinton', 'birthday' => '05161948'})
+    patient.save
+    patient.delete_patient!
+    expect(Patient.all).to eq []
+  end
+end
+
+
+
+
+

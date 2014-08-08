@@ -52,4 +52,25 @@ describe Specialty do
       expect(specialty.doctors_with_specialty).to eq [doctor1, doctor2]
     end
   end
+
+  describe 'update_specialty' do
+    it 'will update a specialty' do
+      test_specialty1 = Specialty.new({'title' => "Pediatrician", 'id' => 1})
+      test_specialty1.save
+      test_specialty2 = Specialty.new({'title' => 'Dermatologist', 'id' => 2})
+      test_specialty2
+      test_specialty1.update_specialty(test_specialty2)
+      expect(test_specialty1.title).to eq 'Dermatologist'
+    end
+  end
+
+  describe 'delete_specialty!' do
+    it 'will delete a specialty' do
+      test_specialty1 = Specialty.new({'title' => "Pediatrician", 'id' => 1})
+      test_specialty1.save
+      test_specialty1.delete_specialty!
+      expect(Specialty.all).to eq []
+    end
+  end
+
 end

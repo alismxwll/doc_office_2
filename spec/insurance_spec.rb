@@ -23,4 +23,20 @@ describe Insurance_Companies do
     test_company2.save
     expect(test_company1).to eq test_company2
   end
+
+  it 'will update the insurance company name' do
+    test_company = Insurance_Companies.new({'name' => 'Pacific Span', 'id' => 1})
+    test_company.save
+    test_company2 = Insurance_Companies.new({'name' => 'Red Cross', ' id' => 1})
+    test_company.update_insurance_company(test_company2)
+    expect(test_company.name).to eq 'Red Cross'
+  end
+
+  it 'will delete an insurance company from the system' do
+    test_company = Insurance_Companies.new({'name' => 'Pacific Span', 'id' => 1})
+    test_company.save
+    test_company.delete_insurance!
+    expect(Insurance_Companies.all).to eq []
+  end
 end
+
